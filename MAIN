@@ -26,11 +26,11 @@ local function SetPrediction(ping)
         new.main.Prediction = 0.9
     elseif ping > 10 and ping <= 20 then
         new.main.Prediction = 0.112124161
-    elseif ping > 20 and ping <= 40 then
+    elseif ping > 20 and ping <= 35 then
         new.main.Prediction = 0.1145
-    elseif ping > 40 and ping <= 65 then
+    elseif ping > 35 and ping <= 75 then
         new.main.Prediction = 0.1211
-    elseif ping > 65 and ping <= 85 then
+    elseif ping > 75 and ping <= 85 then
         new.main.Prediction = 0.129
     elseif ping > 85 and ping <= 100 then
         new.main.Prediction = 0.134
