@@ -1,26 +1,53 @@
-local new = { 
-    main = { 
+local new = {
+    main = {
         Mario = true,
         Prediction = 0.1211,
-        Part = "HumanoidRootPart", -- Head, UpperTorso, HumanoidRootPart, LowerTorso, RightFoot, LeftFoot, RightArm, LeftArm 
+        Part = "HumanoidRootPart", -- Head, UpperTorso, HumanoidRootPart, LowerTorso, RightFoot, LeftFoot, RightArm, LeftArm
         Key = "q",
         Notifications = true,
         AirshotFunc = true
     },
-    Tracer = { 
+    Tracer = {
         TracerThickness = 3.1,
         TracerTransparency = 0.9,
         TracerColor = Color3.fromRGB(255, 255, 255)
     }
 }
-
-
 local CurrentCamera = game:GetService "Workspace".CurrentCamera
 local Mouse = game.Players.LocalPlayer:GetMouse()
 local RunService = game:GetService("RunService")
 local Plr = game.Players.LocalPlayer
 local Line = Drawing.new("Line")
 local Inset = game:GetService("GuiService"):GetGuiInset().Y
+
+-- Set prediction value based on player's ping
+local function SetPrediction(ping)
+    if ping >= 0 and ping <= 10 then
+        new.main.Prediction = 0.9
+    elseif ping > 10 and ping <= 20 then
+        new.main.Prediction = 0.112124161
+    elseif ping > 20 and ping <= 40 then
+        new.main.Prediction = 0.1145
+    elseif ping > 40 and ping <= 65 then
+        new.main.Prediction = 0.1211
+    elseif ping > 65 and ping <= 85 then
+        new.main.Prediction = 0.129
+    elseif ping > 85 and ping <= 100 then
+        new.main.Prediction = 0.134
+    elseif ping > 100 and ping <= 140 then
+        new.main.Prediction = 0.15634
+    elseif ping > 140 and ping <= 180 then
+        new.main.Prediction = 0.1652131
+    elseif ping > 180 then
+        new.main.Prediction = 0.1923111
+    end
+end
+
+-- Check player's ping and set initial prediction value
+local function InitPrediction()
+    local ping = game:GetService("Players").LocalPlayer:Ping()
+    SetPrediction(ping)
+end
 
 Mouse.KeyDown:Connect(function(KeyPressed)
     if KeyPressed == (new.main.Key) then
@@ -45,7 +72,6 @@ Mouse.KeyDown:Connect(function(KeyPressed)
         end
     end
 end)
-
 function FindClosestUser()
     local closestPlayer
     local shortestDistance = math.huge
@@ -63,10 +89,6 @@ function FindClosestUser()
     end
     return closestPlayer
 end
-
-
-
-
 RunService.Stepped:connect(function()
     if new.main.Mario == true then
         local Vector = CurrentCamera:WorldToViewportPoint(Plr.Character[new.main.Part].Position +
@@ -99,7 +121,6 @@ mt.__namecall = newcclosure(function(...)
     end
     return old(...)
 end)
-
 if new.main.AirshotFunc == true then
     if Plr.Character.Humanoid.Jump == true and Plr.Character.Humanoid.FloorMaterial == Enum.Material.Air then
         settings.main.Part = "RightFoot"
