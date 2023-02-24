@@ -10,7 +10,7 @@ local new = {
     Tracer = {
         TracerThickness = 3.1,
         TracerTransparency = 0.9,
-        TracerColor = Color3.fromRGB(255, 255, 255)
+        TracerColor = Color3.fromRGB(23, 30, 51)
     }
 }
 local CurrentCamera = game:GetService "Workspace".CurrentCamera
